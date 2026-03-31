@@ -26,23 +26,23 @@ export default function LandingPage() {
         </div>
 
         {/* Top content */}
-        <div className="relative flex-1 flex flex-col justify-center max-w-sm mx-auto w-full">
-          <h1 className="text-[2.8rem] leading-[1.05] font-black mb-5 tracking-tight">
+        <div className="relative flex-1 flex flex-col items-center justify-center w-full">
+          <h1 className="text-[2.8rem] leading-[1.05] font-black mb-5 tracking-tight text-center">
             You don&apos;t have a<br />
             <span className="text-emerald-400">discipline</span><br />
             problem.
           </h1>
 
-          <p className="text-base text-white/55 leading-relaxed mb-2">
+          <p className="text-base text-white/55 leading-relaxed mb-3 text-center">
             You have a <span className="text-violet-400 font-semibold">dopamine loop.</span>
           </p>
-          <p className="text-sm text-white/35 leading-relaxed max-w-xs mx-auto">
+          <p className="text-sm text-white/35 leading-relaxed text-center max-w-[260px]">
             Compulsive trading is a behavioral addiction — identical to gambling disorder. A 6-day CBT program to rewire it.
           </p>
         </div>
 
         {/* Bottom CTA — anchored to bottom */}
-        <div className="relative w-full max-w-sm mx-auto pt-6">
+        <div className="relative w-full pt-6">
           <Link href="/assessment"
             className="block w-full py-4 min-h-[52px] bg-emerald-500 text-black font-bold rounded-2xl text-base mb-3 shadow-lg shadow-emerald-500/20 flex items-center justify-center">
             Start the free program →
