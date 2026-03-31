@@ -1,17 +1,50 @@
 @import "tailwindcss";
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { background: #080810; color: #E5E5E5; font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background: #080810;
+  color: #E5E5E5;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
+}
+
+/* Remove tap highlight for native feel */
+* { -webkit-tap-highlight-color: transparent; }
+
+/* Prevent zoom on tap (iOS) */
+button, a, [role="button"] {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Prevent zoom on inputs (iOS 16px rule) */
+input, select, textarea { font-size: 16px !important; }
+
+/* Active press scale */
+button:active, a:active { opacity: 0.75; transition: opacity 0.1s; }
 
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
 
-/* Safe area for iPhone notch/home indicator */
+/* Safe area utilities */
 .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 16px); }
 .safe-top { padding-top: env(safe-area-inset-top, 0px); }
+.pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 20px); }
+.pt-safe { padding-top: max(env(safe-area-inset-top), 0px); }
 
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
-.pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 16px); }
+
+/* Momentum scrolling on iOS */
+.scroll-momentum { -webkit-overflow-scrolling: touch; }

@@ -87,15 +87,19 @@ export default function AssessmentPage() {
       {/* Header */}
       <div className="px-5 pt-10 pb-4">
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            {step > 0 && (
-              <button onClick={() => { setStep(step - 1); setSelected(null); }} className="text-white/30">
+          <div className="flex items-center">
+            {step > 0 ? (
+              <button
+                onClick={() => { setStep(step - 1); setSelected(null); }}
+                className="w-11 h-11 flex items-center justify-center rounded-xl bg-white/5 text-white/50 text-lg"
+              >
                 ←
               </button>
+            ) : (
+              <Link href="/" className="w-11 h-11 flex items-center justify-center rounded-xl bg-white/5 text-white/50 text-lg">
+                ←
+              </Link>
             )}
-            <Link href="/" className="text-white/30 text-sm">
-              {step === 0 ? '← Back' : ''}
-            </Link>
           </div>
           <span className="text-xs text-white/30 font-medium">{step + 1} / {questions.length}</span>
         </div>
@@ -118,19 +122,19 @@ export default function AssessmentPage() {
             <button
               key={opt.value}
               onClick={() => setSelected(opt.value)}
-              className={`w-full text-left p-4 rounded-xl border transition-all ${
+              className={`w-full text-left p-4 rounded-2xl border transition-all active:scale-[0.99] ${
                 selected === opt.value
                   ? 'border-emerald-500/50 bg-emerald-500/10'
                   : 'border-white/8 bg-white/[0.03]'
               }`}
             >
               <div className="flex items-start gap-3">
-                <div className={`w-5 h-5 rounded-full border flex-shrink-0 mt-0.5 flex items-center justify-center ${
+                <div className={`w-6 h-6 rounded-full border-2 flex-shrink-0 mt-0.5 flex items-center justify-center transition-all ${
                   selected === opt.value ? 'border-emerald-500 bg-emerald-500' : 'border-white/25'
                 }`}>
                   {selected === opt.value && (
-                    <svg className="w-2.5 h-2.5 text-black" fill="none" viewBox="0 0 10 10">
-                      <path d="M2 5l2.5 2.5 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 10 10">
+                      <path d="M2 5l2.5 2.5 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   )}
                 </div>
@@ -148,8 +152,8 @@ export default function AssessmentPage() {
           <button
             onClick={next}
             disabled={!selected}
-            className={`w-full py-4 rounded-xl font-bold text-base transition-all ${
-              selected ? 'bg-emerald-500 text-black' : 'bg-white/5 text-white/20 cursor-not-allowed'
+            className={`w-full py-4 rounded-2xl font-bold text-base transition-all shadow-lg ${
+              selected ? 'bg-emerald-500 text-black shadow-emerald-500/20' : 'bg-white/5 text-white/20'
             }`}
           >
             {isLast ? 'Continue →' : 'Next →'}

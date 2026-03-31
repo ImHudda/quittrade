@@ -58,7 +58,7 @@ function AuthInner() {
       </div>
 
       <div className="px-6 py-5 text-center">
-        <a href="/" className="text-xs text-white/20 hover:text-white/40 transition-colors">← Back to xQuit</a>
+        <a href="/" className="inline-flex items-center text-xs text-white/30 py-3 px-4 rounded-xl transition-colors">← Back to xQuit</a>
       </div>
     </div>
   );
