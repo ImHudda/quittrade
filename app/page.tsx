@@ -12,43 +12,47 @@ export default function LandingPage() {
         style={{ paddingTop: 'max(env(safe-area-inset-top), 14px)', paddingBottom: '14px' }}>
         <span className="text-base font-bold tracking-tight">x<span className="text-emerald-400">Quit</span></span>
         <Link href="/assessment"
-          className="px-5 py-2.5 bg-emerald-500 text-black text-sm font-bold rounded-full">
+          className="px-5 py-3 bg-emerald-500 text-black text-sm font-bold rounded-2xl">
           Start Free →
         </Link>
       </nav>
 
-      {/* Hero */}
-      <section className="relative flex flex-col items-center justify-center min-h-[100svh] px-5 text-center"
-        style={{ paddingTop: 'calc(max(env(safe-area-inset-top), 0px) + 80px)', paddingBottom: '100px' }}>
+      {/* Hero — full height, content split top/bottom */}
+      <section className="relative flex flex-col min-h-[100svh] px-5 text-center"
+        style={{ paddingTop: 'calc(max(env(safe-area-inset-top), 0px) + 64px)', paddingBottom: 'max(env(safe-area-inset-bottom), 32px)' }}>
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-emerald-500/8 blur-[80px]" />
-          <div className="absolute bottom-1/4 right-0 w-[200px] h-[200px] rounded-full bg-violet-500/6 blur-[60px]" />
+          <div className="absolute bottom-1/3 right-0 w-[250px] h-[250px] rounded-full bg-violet-500/6 blur-[70px]" />
         </div>
 
-        <div className="relative w-full max-w-sm mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium mb-6">
+        {/* Top content */}
+        <div className="relative flex-1 flex flex-col justify-center max-w-sm mx-auto w-full">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium mb-6 mx-auto">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             Science-backed · No willpower · 6 days
           </div>
 
-          <h1 className="text-[2.6rem] leading-[1.1] font-black mb-5 tracking-tight">
+          <h1 className="text-[2.8rem] leading-[1.05] font-black mb-5 tracking-tight">
             You don&apos;t have a<br />
             <span className="text-emerald-400">discipline</span><br />
             problem.
           </h1>
 
-          <p className="text-base text-white/50 leading-relaxed mb-2">
+          <p className="text-base text-white/55 leading-relaxed mb-2">
             You have a <span className="text-violet-400 font-semibold">dopamine loop.</span>
           </p>
-          <p className="text-sm text-white/35 leading-relaxed mb-8 max-w-xs mx-auto">
+          <p className="text-sm text-white/35 leading-relaxed max-w-xs mx-auto">
             Compulsive trading is a behavioral addiction — identical to gambling disorder. A 6-day CBT program to rewire it.
           </p>
+        </div>
 
+        {/* Bottom CTA — anchored to bottom */}
+        <div className="relative w-full max-w-sm mx-auto pt-6">
           <Link href="/assessment"
             className="block w-full py-4 bg-emerald-500 text-black font-bold rounded-2xl text-base mb-3 shadow-lg shadow-emerald-500/20">
             Start the free program →
           </Link>
-          <a href="#science" className="block text-sm text-white/25 py-2">
+          <a href="#science" className="block text-sm text-white/30 py-2">
             See the research ↓
           </a>
         </div>

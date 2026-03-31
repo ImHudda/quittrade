@@ -113,23 +113,23 @@ export default function AssessmentPage() {
         </div>
       </div>
 
-      {/* Scrollable content */}
-      <div className="flex-1 overflow-y-auto px-5 pt-2 pb-2">
-        <h1 className="text-2xl font-black mb-2 leading-tight tracking-tight">{q.title}</h1>
-        <p className="text-sm text-white/45 mb-6 leading-relaxed">{q.subtitle}</p>
+      {/* Question + options filling all available space */}
+      <div className="flex-1 flex flex-col px-5 pt-2 pb-2 min-h-0">
+        <h1 className="text-2xl font-black mb-1.5 leading-tight tracking-tight flex-shrink-0">{q.title}</h1>
+        <p className="text-sm text-white/45 mb-4 leading-relaxed flex-shrink-0">{q.subtitle}</p>
 
-        <div className="space-y-3">
+        <div className="flex-1 flex flex-col gap-2.5 min-h-0">
           {q.options.map((opt) => (
             <button
               key={opt.value}
               onClick={() => setSelected(opt.value)}
-              className={`w-full text-left rounded-2xl border-2 transition-all active:scale-[0.99] ${
+              className={`flex-1 w-full text-left rounded-2xl border-2 transition-all active:scale-[0.99] ${
                 selected === opt.value
                   ? 'border-emerald-500 bg-emerald-500/12'
                   : 'border-white/12 bg-white/5'
               }`}
             >
-              <div className="flex items-center gap-4 px-5 py-4">
+              <div className="flex items-center gap-4 px-5 h-full">
                 <div className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all ${
                   selected === opt.value ? 'border-emerald-500 bg-emerald-500' : 'border-white/30'
                 }`}>
@@ -139,11 +139,11 @@ export default function AssessmentPage() {
                     </svg>
                   )}
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 py-4">
                   <div className={`font-semibold text-[15px] leading-snug ${selected === opt.value ? 'text-white' : 'text-white/85'}`}>
                     {opt.label}
                   </div>
-                  <div className="text-xs text-white/40 mt-0.5 leading-relaxed">{opt.desc}</div>
+                  <div className="text-xs text-white/40 mt-1 leading-relaxed">{opt.desc}</div>
                 </div>
               </div>
             </button>
