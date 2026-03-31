@@ -12,7 +12,7 @@ export default function LandingPage() {
         style={{ paddingTop: 'max(env(safe-area-inset-top), 14px)', paddingBottom: '14px' }}>
         <span className="text-base font-bold tracking-tight">x<span className="text-emerald-400">Quit</span></span>
         <Link href="/assessment"
-          className="px-5 py-2.5 bg-emerald-500 text-black text-sm font-bold rounded-xl">
+          className="px-4 py-2 bg-emerald-500 text-black text-[13px] font-bold rounded-full leading-none">
           Start Free →
         </Link>
       </nav>
