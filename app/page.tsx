@@ -27,11 +27,6 @@ export default function LandingPage() {
 
         {/* Top content */}
         <div className="relative flex-1 flex flex-col justify-center max-w-sm mx-auto w-full">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium mb-6 mx-auto">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Science-backed · No willpower · 6 days
-          </div>
-
           <h1 className="text-[2.8rem] leading-[1.05] font-black mb-5 tracking-tight">
             You don&apos;t have a<br />
             <span className="text-emerald-400">discipline</span><br />

@@ -230,7 +230,7 @@ You are getting back:
 - Your relationships (how much presence did trading steal?)
 
 **The Quit Event**
-QuitSure's clinical research showed that a guided, conscious quit event — rather than cold turkey — dramatically improves outcomes. You will complete one final session mindfully, then close everything deliberately.`,
+xQuit's clinical research showed that a guided, conscious quit event — rather than cold turkey — dramatically improves outcomes. You will complete one final session mindfully, then close everything deliberately.`,
     },
     videoExercise: {
       title: "The Last Day",
@@ -297,5 +297,5 @@ export const stats = [
   { value: "90%", label: "CBT success rate in program completers at 6 months", source: "Clinical Trials" },
   { value: "10–20", label: "minutes until an urge passes if you don't act on it", source: "Relapse Prevention Model" },
   { value: "8–10%", label: "of those with gambling disorder ever seek help", source: "NCPG" },
-  { value: "86.4%", label: "of QuitSure completers reported no severe withdrawal", source: "PMC Efficacy Study" },
+  { value: "86.4%", label: "of xQuit completers reported no severe withdrawal", source: "PMC Efficacy Study" },
 ];
