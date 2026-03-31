@@ -24,134 +24,121 @@ export default function ProgramDashboard() {
   const completed = (day: number) => completedDays.includes(day);
 
   const motivationMessages: Record<string, string> = {
-    boredom: 'Your trigger is boredom. Day 3 will be critical — it directly addresses emotional drivers.',
-    stress: 'Your trigger is stress. The escape loop is real. Day 3 explains exactly why — and what to use instead.',
-    loss: 'Your trigger is chasing losses. Day 2 is especially important — it names the exact deception at work.',
-    win: "Your trigger is winning momentum. Day 1's P&L audit will be illuminating.",
+    boredom: 'Your trigger is boredom. Day 3 is critical — it addresses emotional drivers directly.',
+    stress: 'Your trigger is stress. Day 3 explains the escape loop and gives you alternatives.',
+    loss: 'Your trigger is chasing losses. Day 2 names the exact deception driving this.',
+    win: "Your trigger is winning momentum. Day 1's P&L audit will be eye-opening.",
     habit: "Automatic behavior means the pattern is deep. Day 1 brings it back to conscious awareness.",
   };
 
+  const currentDayData = days.find(d => d.day === currentDay && !completed(currentDay));
+
   return (
-    <div className="min-h-screen bg-[#080810] text-white">
+    <div className="min-h-[100svh] bg-[#080810] text-white">
       {/* Header */}
-      <div className="border-b border-white/5 px-6 py-5">
-        <div className="max-w-2xl mx-auto flex items-center justify-between">
-          <div>
-            <Link href="/" className="text-xs text-white/30 hover:text-white/60 transition-colors mb-1 block">
-              ← QuitTrade
-            </Link>
-            <h1 className="text-lg font-bold">Your 6-Day Program</h1>
-          </div>
+      <div className="px-5 pt-10 pb-5 border-b border-white/5">
+        <Link href="/" className="text-[11px] text-white/25 mb-3 block">← QuitTrade</Link>
+        <div className="flex items-end justify-between">
+          <h1 className="text-xl font-bold">Your Program</h1>
           <div className="text-right">
-            <div className="text-2xl font-bold text-emerald-400">{completedDays.length}/6</div>
-            <div className="text-xs text-white/30">days complete</div>
+            <span className="text-2xl font-bold text-emerald-400">{completedDays.length}</span>
+            <span className="text-sm text-white/30">/6 days</span>
           </div>
         </div>
+
+        {/* Progress bar */}
+        <div className="mt-4 h-1.5 bg-white/5 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-700"
+            style={{ width: `${(completedDays.length / 6) * 100}%` }}
+          />
+        </div>
+        {completedDays.length === 6 && (
+          <div className="mt-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs text-center font-medium">
+            Program complete. You are no longer the person who started Day 1.
+          </div>
+        )}
       </div>
 
-      <div className="max-w-2xl mx-auto px-6 py-8">
-        {/* Progress bar */}
-        <div className="mb-8">
-          <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-700"
-              style={{ width: `${(completedDays.length / 6) * 100}%` }}
-            />
-          </div>
-          {completedDays.length === 6 && (
-            <div className="mt-3 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm text-center font-medium">
-              Program complete. You are no longer the person who started Day 1.
-            </div>
-          )}
-        </div>
-
-        {/* Personalised message */}
+      <div className="px-5 py-5">
+        {/* Personalised note */}
         {assessment?.trigger && motivationMessages[assessment.trigger] && (
-          <div className="mb-6 p-4 rounded-xl bg-white/[0.03] border border-white/6 text-sm text-white/50">
-            <span className="text-white/70 font-medium">Personalised note: </span>
+          <div className="mb-5 p-3.5 rounded-xl bg-white/[0.03] border border-white/6 text-xs text-white/50 leading-relaxed">
+            <span className="text-white/65 font-medium">Note: </span>
             {motivationMessages[assessment.trigger]}
           </div>
         )}
 
-        {/* Day cards */}
-        <div className="space-y-3">
+        {/* Current day highlight */}
+        {currentDayData && (
+          <Link href={`/day/${currentDayData.day}`} className="block mb-5">
+            <div className={`p-5 rounded-2xl bg-gradient-to-br ${currentDayData.color} relative overflow-hidden`}>
+              <div className="absolute inset-0 bg-black/40" />
+              <div className="relative">
+                <div className="text-xs text-white/60 mb-1">Up next · Day {currentDayData.day}</div>
+                <div className="text-lg font-bold mb-1">{currentDayData.title}</div>
+                <div className="text-sm text-white/70 mb-3">{currentDayData.subtitle}</div>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white text-black font-bold text-sm rounded-xl">
+                  Start Day {currentDayData.day} · {currentDayData.duration} →
+                </div>
+              </div>
+            </div>
+          </Link>
+        )}
+
+        {/* All days */}
+        <div className="space-y-2">
           {days.map((day) => {
             const isUnlocked = unlocked(day.day);
             const isDone = completed(day.day);
             const isCurrent = day.day === currentDay && !isDone;
 
+            if (isCurrent) return null; // already shown above
+
             return (
               <div
                 key={day.day}
-                className={`rounded-2xl border transition-all ${
-                  isDone
-                    ? 'border-emerald-500/20 bg-emerald-500/5'
-                    : isCurrent
-                    ? 'border-white/15 bg-white/[0.04]'
-                    : isUnlocked
-                    ? 'border-white/8 bg-white/[0.02]'
-                    : 'border-white/4 bg-white/[0.01] opacity-40'
+                className={`flex items-center gap-3 p-4 rounded-xl border transition-all ${
+                  isDone ? 'border-emerald-500/20 bg-emerald-500/5'
+                  : isUnlocked ? 'border-white/8 bg-white/[0.02]'
+                  : 'border-white/4 bg-white/[0.01] opacity-40'
                 }`}
               >
-                <div className="flex items-center gap-4 p-5">
-                  {/* Icon / status */}
-                  <div className="relative flex-shrink-0">
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${day.color} flex items-center justify-center text-2xl ${!isUnlocked ? 'grayscale opacity-50' : ''}`}>
-                      {isDone ? '✓' : day.icon}
-                    </div>
-                    {isCurrent && (
-                      <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <span className="text-xs text-white/30">Day {day.day}</span>
-                      <span className="text-xs text-white/20">·</span>
-                      <span className="text-xs text-white/30">{day.duration}</span>
-                      {isDone && <span className="text-xs text-emerald-400 font-medium ml-1">Complete</span>}
-                    </div>
-                    <div className="font-semibold text-sm">{day.title}</div>
-                    <div className="text-xs text-white/40 mt-0.5">{day.subtitle}</div>
-                  </div>
-
-                  {/* CTA */}
-                  {isUnlocked ? (
-                    <Link
-                      href={`/day/${day.day}`}
-                      className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        isDone
-                          ? 'bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20'
-                          : isCurrent
-                          ? 'bg-emerald-500 text-black hover:bg-emerald-400'
-                          : 'bg-white/5 text-white/50 hover:bg-white/10'
-                      }`}
-                    >
-                      {isDone ? 'Review' : isCurrent ? 'Start →' : 'Open'}
-                    </Link>
-                  ) : (
-                    <div className="flex-shrink-0 text-white/20 text-xl">🔒</div>
-                  )}
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${day.color} flex items-center justify-center text-lg flex-shrink-0 ${!isUnlocked ? 'grayscale opacity-50' : ''}`}>
+                  {isDone ? '✓' : day.icon}
                 </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[11px] text-white/30">Day {day.day} · {day.duration}</div>
+                  <div className="font-semibold text-sm">{day.title}</div>
+                </div>
+                {isUnlocked ? (
+                  <Link
+                    href={`/day/${day.day}`}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium flex-shrink-0 ${
+                      isDone ? 'bg-emerald-500/10 text-emerald-400' : 'bg-white/5 text-white/40'
+                    }`}
+                  >
+                    {isDone ? 'Review' : 'Open'}
+                  </Link>
+                ) : (
+                  <span className="text-white/15 text-base flex-shrink-0">🔒</span>
+                )}
               </div>
             );
           })}
         </div>
 
-        {/* How to use the program */}
-        <div className="mt-10 p-5 rounded-xl border border-white/6 bg-white/[0.02]">
-          <h3 className="font-semibold text-sm mb-3">How to use this program</h3>
+        {/* Tips */}
+        <div className="mt-6 p-4 rounded-xl border border-white/6 bg-white/[0.02]">
+          <h3 className="font-semibold text-sm mb-3 text-white/70">How this program works</h3>
           <ul className="space-y-2">
             {[
-              'Each day: read the lesson, then watch the exercise 4× across the day (not all at once)',
-              'Morning / before trading / after a session / before bed — spread the 4 watches',
-              'Complete the behavioral exercise. Write your answers somewhere private.',
-              'Mark the day complete only after doing all three parts.',
-              "Don't rush. One day per day minimum. Let the material work.",
+              'Each day: reading + exercise watched 4× + behavioral practice',
+              'Spread the 4 watches: morning, before trading, after, before bed',
+              'Do not rush. One day minimum per calendar day.',
             ].map((tip, i) => (
-              <li key={i} className="flex items-start gap-2 text-xs text-white/40">
-                <span className="text-emerald-500/60 flex-shrink-0 mt-0.5">→</span>
+              <li key={i} className="flex gap-2 text-xs text-white/35">
+                <span className="text-emerald-500/50 flex-shrink-0">→</span>
                 {tip}
               </li>
             ))}
