@@ -86,8 +86,8 @@ export default function AssessmentPage() {
     <div className="min-h-[100svh] bg-[#080810] text-white flex flex-col"
       style={{ paddingTop: 'env(safe-area-inset-top)' }}>
 
-      {/* Sticky header */}
-      <div className="px-5 pt-5 pb-4 flex-shrink-0">
+      {/* Header */}
+      <div className="px-4 pt-5 pb-4 flex-shrink-0">
         <div className="flex items-center justify-between mb-5">
           {step > 0 ? (
             <button
@@ -113,23 +113,23 @@ export default function AssessmentPage() {
         </div>
       </div>
 
-      {/* Question + options filling all available space */}
-      <div className="flex-1 flex flex-col px-5 pt-2 pb-2 min-h-0">
-        <h1 className="text-2xl font-black mb-1.5 leading-tight tracking-tight flex-shrink-0">{q.title}</h1>
-        <p className="text-sm text-white/45 mb-4 leading-relaxed flex-shrink-0">{q.subtitle}</p>
+      {/* Question + options */}
+      <div className="flex-1 px-4 pt-2 pb-2 overflow-y-auto">
+        <h1 className="text-2xl font-black mb-1.5 leading-tight tracking-tight">{q.title}</h1>
+        <p className="text-sm text-white/45 mb-4 leading-relaxed">{q.subtitle}</p>
 
-        <div className="flex-1 flex flex-col gap-2.5 min-h-0">
+        <div className="flex flex-col gap-2">
           {q.options.map((opt) => (
             <button
               key={opt.value}
               onClick={() => setSelected(opt.value)}
-              className={`flex-1 w-full text-left rounded-2xl border-2 transition-all active:scale-[0.99] ${
+              className={`w-full text-left rounded-xl border-2 transition-all active:scale-[0.99] min-h-[60px] ${
                 selected === opt.value
                   ? 'border-emerald-500 bg-emerald-500/12'
                   : 'border-white/12 bg-white/5'
               }`}
             >
-              <div className="flex items-center gap-4 px-5 h-full">
+              <div className="flex items-center gap-4 px-4 py-3">
                 <div className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all ${
                   selected === opt.value ? 'border-emerald-500 bg-emerald-500' : 'border-white/30'
                 }`}>
@@ -139,11 +139,11 @@ export default function AssessmentPage() {
                     </svg>
                   )}
                 </div>
-                <div className="flex-1 min-w-0 py-4">
+                <div className="flex-1 min-w-0">
                   <div className={`font-semibold text-[15px] leading-snug ${selected === opt.value ? 'text-white' : 'text-white/85'}`}>
                     {opt.label}
                   </div>
-                  <div className="text-xs text-white/40 mt-1 leading-relaxed">{opt.desc}</div>
+                  <div className="text-xs text-white/40 mt-0.5 leading-relaxed">{opt.desc}</div>
                 </div>
               </div>
             </button>
@@ -152,12 +152,12 @@ export default function AssessmentPage() {
       </div>
 
       {/* Sticky bottom CTA */}
-      <div className="flex-shrink-0 px-5 pt-4 bg-[#080810]"
-        style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 24px)' }}>
+      <div className="sticky bottom-0 flex-shrink-0 px-4 pt-3 bg-[#080810] border-t border-white/5"
+        style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 16px)' }}>
         <button
           onClick={next}
           disabled={!selected}
-          className={`w-full py-4 rounded-2xl font-bold text-base transition-all ${
+          className={`w-full py-3.5 rounded-2xl font-bold text-base transition-all min-h-[52px] ${
             selected
               ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/25'
               : 'bg-white/8 text-white/25'
@@ -166,7 +166,7 @@ export default function AssessmentPage() {
           {isLast ? 'See my program →' : 'Continue →'}
         </button>
         {step === 0 && (
-          <p className="mt-3 text-center text-[11px] text-white/20">Stays on your device. Never shared.</p>
+          <p className="mt-2 text-center text-xs text-white/20">Stays on your device. Never shared.</p>
         )}
       </div>
     </div>
