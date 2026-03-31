@@ -4,6 +4,7 @@ import { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { days } from '../../data/program';
+import { affirmations } from '../../data/affirmations';
 
 function parseContent(text: string) {
   return text.split('\n').map((line, i) => {
@@ -31,6 +32,8 @@ export default function DayPage({ params }: { params: Promise<{ day: string }> }
   const [watchCount, setWatchCount] = useState(0);
   const [tab, setTab] = useState<'read' | 'watch' | 'practice'>('read');
   const [dayDone, setDayDone] = useState(false);
+  // Pick a stable affirmation for this day number
+  const dayAffirmation = affirmations[(dayNum * 4) % affirmations.length];
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -128,6 +131,11 @@ export default function DayPage({ params }: { params: Promise<{ day: string }> }
         {/* READ */}
         {tab === 'read' && (
           <div>
+            {/* Day affirmation */}
+            <div className="mb-5 p-4 rounded-2xl border border-emerald-500/15 bg-emerald-500/5">
+              <div className="text-[10px] text-emerald-500/50 font-medium uppercase tracking-wider mb-1.5">Affirmation</div>
+              <p className="text-sm text-emerald-100/75 leading-relaxed italic">&ldquo;{dayAffirmation}&rdquo;</p>
+            </div>
             <h2 className="text-lg font-bold mb-5">{dayData.reading.title}</h2>
             <div className="space-y-1 mb-8">{parseContent(dayData.reading.content)}</div>
             <button
@@ -231,10 +239,13 @@ export default function DayPage({ params }: { params: Promise<{ day: string }> }
               </div>
             ) : (
               <div className="text-center">
-                <div className="inline-flex flex-col items-center gap-3 p-6 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                  <div className="text-3xl">✓</div>
-                  <div className="text-emerald-400 font-semibold">Day {dayNum} complete</div>
-                  <Link href="/program" className="text-sm text-emerald-400/70">Back to program →</Link>
+                <div className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+                  <div className="text-4xl">✓</div>
+                  <div className="text-emerald-400 font-bold text-lg">Day {dayNum} complete</div>
+                  <p className="text-sm text-white/50 italic leading-relaxed">&ldquo;{dayAffirmation}&rdquo;</p>
+                  <Link href="/program" className="mt-2 px-6 py-3 bg-emerald-500 text-black font-bold rounded-xl text-sm">
+                    Continue →
+                  </Link>
                 </div>
               </div>
             )}

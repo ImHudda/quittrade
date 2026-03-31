@@ -3,11 +3,14 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { days } from '../data/program';
+import { getDailyAffirmation, getRandomAffirmation } from '../data/affirmations';
 
 export default function ProgramDashboard() {
   const [completedDays, setCompletedDays] = useState<number[]>([]);
   const [currentDay, setCurrentDay] = useState(1);
   const [assessment, setAssessment] = useState<Record<string, string> | null>(null);
+  const [affirmation, setAffirmation] = useState('');
+  const [affirmationKey, setAffirmationKey] = useState(0);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -18,7 +21,13 @@ export default function ProgramDashboard() {
       if (curD) setCurrentDay(parseInt(curD));
       if (ass) setAssessment(JSON.parse(ass));
     }
+    setAffirmation(getDailyAffirmation());
   }, []);
+
+  function nextAffirmation() {
+    setAffirmation(getRandomAffirmation());
+    setAffirmationKey(k => k + 1);
+  }
 
   const unlocked = (day: number) => day <= currentDay;
   const completed = (day: number) => completedDays.includes(day);
@@ -37,7 +46,7 @@ export default function ProgramDashboard() {
     <div className="min-h-[100svh] bg-[#080810] text-white">
       {/* Header */}
       <div className="px-5 pt-10 pb-5 border-b border-white/5">
-        <Link href="/" className="text-[11px] text-white/25 mb-3 block">← QuitTrade</Link>
+        <Link href="/" className="text-[11px] text-white/25 mb-3 block">← xQuit</Link>
         <div className="flex items-end justify-between">
           <h1 className="text-xl font-bold">Your Program</h1>
           <div className="text-right">
@@ -60,10 +69,28 @@ export default function ProgramDashboard() {
         )}
       </div>
 
-      <div className="px-5 py-5">
+      <div className="px-5 py-5 space-y-4">
+
+        {/* Daily affirmation card */}
+        {affirmation && (
+          <button
+            key={affirmationKey}
+            onClick={nextAffirmation}
+            className="w-full text-left p-4 rounded-2xl border border-emerald-500/15 bg-emerald-500/5 relative overflow-hidden group"
+          >
+            <div className="text-[10px] text-emerald-500/60 font-medium uppercase tracking-wider mb-2">
+              Today&apos;s affirmation · tap to refresh
+            </div>
+            <p className="text-sm text-emerald-100/80 leading-relaxed font-medium italic">
+              &ldquo;{affirmation}&rdquo;
+            </p>
+            <div className="absolute top-3 right-3 text-emerald-500/30 text-xs">↻</div>
+          </button>
+        )}
+
         {/* Personalised note */}
         {assessment?.trigger && motivationMessages[assessment.trigger] && (
-          <div className="mb-5 p-3.5 rounded-xl bg-white/[0.03] border border-white/6 text-xs text-white/50 leading-relaxed">
+          <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/6 text-xs text-white/50 leading-relaxed">
             <span className="text-white/65 font-medium">Note: </span>
             {motivationMessages[assessment.trigger]}
           </div>
@@ -71,7 +98,7 @@ export default function ProgramDashboard() {
 
         {/* Current day highlight */}
         {currentDayData && (
-          <Link href={`/day/${currentDayData.day}`} className="block mb-5">
+          <Link href={`/day/${currentDayData.day}`} className="block">
             <div className={`p-5 rounded-2xl bg-gradient-to-br ${currentDayData.color} relative overflow-hidden`}>
               <div className="absolute inset-0 bg-black/40" />
               <div className="relative">
@@ -92,8 +119,7 @@ export default function ProgramDashboard() {
             const isUnlocked = unlocked(day.day);
             const isDone = completed(day.day);
             const isCurrent = day.day === currentDay && !isDone;
-
-            if (isCurrent) return null; // already shown above
+            if (isCurrent) return null;
 
             return (
               <div
@@ -129,7 +155,7 @@ export default function ProgramDashboard() {
         </div>
 
         {/* Tips */}
-        <div className="mt-6 p-4 rounded-xl border border-white/6 bg-white/[0.02]">
+        <div className="p-4 rounded-xl border border-white/6 bg-white/[0.02]">
           <h3 className="font-semibold text-sm mb-3 text-white/70">How this program works</h3>
           <ul className="space-y-2">
             {[
