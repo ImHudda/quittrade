@@ -24,5 +24,11 @@ export async function ensureTables() {
       current_day INTEGER DEFAULT 1,
       updated_at TEXT DEFAULT (datetime('now'))
     );
+
+    CREATE TABLE IF NOT EXISTS xall_leads (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT UNIQUE NOT NULL,
+      created_at TEXT DEFAULT (datetime('now'))
+    );
   `);
 }
